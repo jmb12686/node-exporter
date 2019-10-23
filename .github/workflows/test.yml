@@ -36,7 +36,7 @@ jobs:
         name: Start container
         run: |
           docker rm -f ${{ steps.prepare.outputs.container_name }} > /dev/null 2>&1 || true
-          docker run -d --name ${{ steps.prepare.outputs.container_name }} ${{ steps.prepare.outputs.build_tag }} -v UNIX-LISTEN:/tmp/fake,fork UNIX-CONNECT:/var/run/docker.sock
+          docker run -d --name ${{ steps.prepare.outputs.container_name }} ${{ steps.prepare.outputs.build_tag }}
       -
         name: Test run
         run: |
