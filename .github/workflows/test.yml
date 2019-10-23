@@ -36,12 +36,12 @@ jobs:
         name: Start container
         run: |
           docker rm -f ${{ steps.prepare.outputs.container_name }} > /dev/null 2>&1 || true
-          docker run -d --name ${{ steps.prepare.outputs.container_name }} ${{ steps.prepare.outputs.build_tag }} \
+          docker run -d --name ${{ steps.prepare.outputs.container_name }} \
           -v /proc:/host/proc:ro \
           -v /sys:/host/sys:ro \
           -v /:/rootfs:ro \
           -v /etc/hostname:/etc/nodename:ro \
-          '--path.sysfs=/host/sys' '--path.procfs=/host/proc' '--path.rootfs=/rootfs' '--collector.textfile.directory=/etc/node-exporter/' '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)' '--no-collector.ipvs'
+          ${{ steps.prepare.outputs.build_tag }} '--path.sysfs=/host/sys' '--path.procfs=/host/proc' '--path.rootfs=/rootfs' '--collector.textfile.directory=/etc/node-exporter/' '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)' '--no-collector.ipvs'
       -
         name: Test run
         run: |
