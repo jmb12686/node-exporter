@@ -1,4 +1,19 @@
-FROM prom/node-exporter
+## Build stage - Build node-exporter from latest source
+FROM golang:alpine as builder
+
+RUN apk update && apk add --no-cache git && \
+    apk add --no-cache make && \
+    apk add --no-cache gcc && \
+    apk add --no-cache curl && \
+    apk add --no-cache libc-dev && \
+    apk add --no-cache bash
+
+RUN go get github.com/prometheus/node_exporter
+WORKDIR $GOPATH/src/github.com/prometheus/node_exporter
+RUN make build
+
+## Run stage - Install dependencies and copy node-exporter from builder
+FROM alpine 
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -15,6 +30,8 @@ LABEL maintainer="John Belisle" \
   org.label-schema.vendor="jmb12686" \
   org.label-schema.schema-version="1.0"
 
+COPY --from=builder go/src/github.com/prometheus/node_exporter/node_exporter /bin/node_exporter
+
 ENV NODE_ID=none
 
 USER root
@@ -22,5 +39,6 @@ USER root
 COPY conf /etc/node-exporter/
 RUN ["chmod", "+x", "/etc/node-exporter/docker-entrypoint.sh"]
 
+EXPOSE      9100
 ENTRYPOINT  [ "/etc/node-exporter/docker-entrypoint.sh" ]
 CMD [ "/bin/node_exporter" ]
