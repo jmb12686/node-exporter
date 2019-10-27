@@ -1,5 +1,12 @@
 # node-exporter
-Containerized, multiarch version of node-exporter, used for [Prometheus](https://prometheus.io/) monitoring.  Designed to be usable within either x86-64 and ARM based Docker Swarm clusters for correct reporting of the underlying node hostname
+<p align="center">
+  <a href="https://hub.docker.com/r/jmb12686/node-exporter/tags?page=1&ordering=last_updated"><img src="https://img.shields.io/github/v/tag/jmb12686/node-exporter?label=version&style=flat-square" alt="Latest Version"></a>
+  <a href="https://github.com/jmb12686/node-exporter/actions"><img src="https://github.com/jmb12686/node-exporter/workflows/build/badge.svg" alt="Build Status"></a>
+  <a href="https://hub.docker.com/r/jmb12686/node-exporter/"><img src="https://img.shields.io/docker/stars/jmb12686/node-exporter.svg?style=flat-square" alt="Docker Stars"></a>
+  <a href="https://hub.docker.com/r/jmb12686/node-exporter/"><img src="https://img.shields.io/docker/pulls/jmb12686/node-exporter.svg?style=flat-square" alt="Docker Pulls"></a>
+</p>
+
+Containerized, multiarch version of node-exporter, used for [Prometheus](https://prometheus.io/) monitoring.  Multi-stage build is used to build from official [node-exporter source code](github.com/prometheus/node_exporter).  Designed to be usable within x86-64, arm64, armv6, and armv7 based Docker Swarm clusters.  Added support for correct reporting of the underlying node hostname
 
 ## Automated Build and Deploy
 This repository utilizes GitHub Actions to automatically build and deploy multiarch images to DockerHub when a new tag is pushed.
@@ -16,12 +23,8 @@ $ cd node-exporter
 
 Build multiarch image:
 ```bash
-$ docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t jmb12686/node-exporter:latest --push .
+$ docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v6 -t jmb12686/node-exporter:latest --push .
 ```
-
-If building from Windows host:
-
-* run `dos2unix *.sh` in cygwin / WSL on all shell scripts in conf/ directory
 
 ## Usage
 
@@ -59,9 +62,7 @@ services:
       mode: global
       resources:
         limits:
-          memory: 128M
-        reservations:
-          memory: 64M
+          memory: 32M
 ```
 
 
