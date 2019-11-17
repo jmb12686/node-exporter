@@ -6,7 +6,7 @@
   <a href="https://hub.docker.com/r/jmb12686/node-exporter/"><img src="https://img.shields.io/docker/pulls/jmb12686/node-exporter.svg?style=flat-square" alt="Docker Pulls"></a>
 </p>
 
-Containerized, multiarch version of node-exporter, used for [Prometheus](https://prometheus.io/) monitoring.  Multi-stage build is used to build from official [node-exporter source code](github.com/prometheus/node_exporter).  Designed to be usable within x86-64, arm64, armv6, and armv7 based Docker Swarm clusters.  Added support for correct reporting of the underlying node hostname
+Containerized, multiarch version of node-exporter, used for [Prometheus](https://prometheus.io/) monitoring.  Multi-stage build is used to build from official [node-exporter source code](https://github.com/prometheus/node_exporter).  Designed to be usable within x86-64, arm64, armv6, and armv7 based Docker Swarm clusters.  Added support for correct reporting of the underlying node hostname
 
 ## Automated Build and Deploy
 This repository utilizes GitHub Actions to automatically build and deploy multiarch images to DockerHub when a new tag is pushed.
