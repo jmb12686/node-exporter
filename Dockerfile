@@ -9,7 +9,7 @@ RUN apk update && apk add --no-cache git && \
     apk add --no-cache bash
 
 RUN mkdir -p $GOPATH/src/github.com/prometheus/node_exporter && \
-    git clone --branch v0.18.1 --depth 1 https://github.com/prometheus/node_exporter.git $GOPATH/src/github.com/prometheus/node_exporter
+    git clone --branch v1.1.2 --depth 1 https://github.com/prometheus/node_exporter.git $GOPATH/src/github.com/prometheus/node_exporter
 WORKDIR $GOPATH/src/github.com/prometheus/node_exporter
 RUN make build
 
